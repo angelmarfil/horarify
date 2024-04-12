@@ -1,7 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import ThemeController from '@/themes/ThemeController.vue'
+</script>
 <template>
   <div class="navbar bg-base-100">
-    <div class="navbar-start"></div>
+    <div class="navbar-start">
+      <ThemeController></ThemeController>
+    </div>
     <div class="navbar-center">
       <a class="btn btn-ghost text-xl">Horarify</a>
     </div>
