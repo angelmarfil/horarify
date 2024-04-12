@@ -1,20 +1,17 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
+import Navbar from '@/layout/NavbarLayout.vue'
+import BtmNav from '@/layout/BtmNavLayout.vue'
 </script>
 
 <template>
-  <header>
+  <Navbar></Navbar>
 
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
+  <main>
+    <RouterView />
+  </main>
 
-  <RouterView />
+  <BtmNav></BtmNav>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
