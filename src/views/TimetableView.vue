@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
-
 <template>
-  <main>
+  <div>
+    <h1>Hola mundo</h1>
     <button class="btn">Button</button>
     <button class="btn btn-neutral">Neutral</button>
     <button class="btn btn-primary">Primary</button>
@@ -9,5 +9,7 @@
     <button class="btn btn-accent">Accent</button>
     <button class="btn btn-ghost">Ghost</button>
     <button class="btn btn-link">Link</button>
-  </main>
+  </div>
 </template>
+
+<style scoped></style>
