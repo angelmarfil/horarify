@@ -1,4 +1,39 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import { RouterLink } from 'vue-router'
+import router from '@/router'
+import { useUserStore } from '@/stores/user'
+
+const loginData = ref({
+  email: '',
+  password: ''
+})
+
+const userStore = useUserStore()
+const response = ref(false)
+
+const emailValidation = computed(() => {
+  const email = loginData.value.email
+  const emailRegex = new RegExp(/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/)
+  return email.length > 0 && !emailRegex.test(email) ? 'El Email debe ser válido.' : ''
+})
+
+const isFormValid = computed(() => {
+  const email = loginData.value.email
+  const password = loginData.value.password
+
+  return emailValidation.value.length == 0 && email.length > 0 && password.length > 0
+})
+
+async function submit() {
+  if (loginData.value.email && loginData.value.password) {
+    response.value = await userStore.login(loginData.value.email, loginData.value.password)
+    if (response.value) {
+      router.push({ name: 'timetable' })
+    }
+  }
+}
+</script>
 <template>
   <div class="flex items-start justify-center h-screen">
     <div class="card w-full bg-base-100 m-4">
@@ -11,7 +46,11 @@
           height="100"
         />
       </figure>
-      <form class="card-body items-center text-center gap-y-14 pt-4" method="post">
+      <form
+        class="card-body items-center text-center gap-y-14 pt-4"
+        method="post"
+        @submit.prevent="submit"
+      >
         <h2 class="card-title">Iniciar Sesión</h2>
         <label class="input input-bordered flex items-center gap-2 relative">
           <svg
@@ -27,8 +66,8 @@
               d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z"
             />
           </svg>
-          <input type="text" class="grow" placeholder="Email" />
-          <span class="text-error absolute top-14">error</span>
+          <input type="text" class="grow" placeholder="Email" v-model.trim="loginData.email" />
+          <span class="text-error absolute top-14">{{ emailValidation }}</span>
         </label>
 
         <label class="input input-bordered flex items-center gap-2">
@@ -44,10 +83,15 @@
               clip-rule="evenodd"
             />
           </svg>
-          <input type="password" class="grow" placeholder="Contraseña" />
+          <input
+            type="password"
+            class="grow"
+            placeholder="Contraseña"
+            v-model.trim="loginData.password"
+          />
         </label>
         <div class="card-actions">
-          <button class="btn btn-primary">Ingresar</button>
+          <button class="btn btn-primary" :disabled="!isFormValid">Ingresar</button>
         </div>
 
         <p class="text-sm">
@@ -61,3 +105,4 @@
     </div>
   </div>
 </template>
+<style scoped></style>
