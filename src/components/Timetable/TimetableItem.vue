@@ -30,6 +30,7 @@ const eventsOnDate = props.events.filter((event) => {
     <div
       v-for="event in eventsOnDate"
       :key="event.id"
+      :style="{ backgroundColor: event.color }"
       :class="[
         'flex shadow-md px-4 py-2 items-center justify-between bg-[#16A34A] text-white rounded-2xl h-[80px]',
         {}

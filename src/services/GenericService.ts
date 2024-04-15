@@ -1,7 +1,9 @@
 import { ref, type Ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 
 const toast = useToast()
+const router = useRouter()
 
 export default class EntityService<T> {
   private entity: Ref<T>
@@ -22,6 +24,17 @@ export default class EntityService<T> {
         ...options,
         headers: { ...options.headers, Authorization: `Bearer ${this.token}`.replace(/['"]+/g, '') }
       })
+
+      if (response.status === 401) {
+        localStorage.removeItem('token')
+        if (router && router.push) {
+          router.push('/login')
+        } else {
+          console.error('El enrutador no está definido')
+        }
+        toast.info('Su sesión ha expirado. Por favor, inicie sesión nuevamente.', { timeout: 5000 })
+      }
+
       return await response.json()
     } catch (error) {
       console.error(error)
