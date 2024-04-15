@@ -15,8 +15,8 @@ const formatDate = (date: Date) => {
 }
 
 const eventsOnDate = props.events.filter((event) => {
-  const eventDayOfWeek = event.dayOfWeek // Assuming 0 for Sunday, 1 for Monday, ..., 6 for Saturday
-  const currentDayOfWeek = props.date.getDay() // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
+  const eventDayOfWeek = event.dayOfWeek
+  const currentDayOfWeek = props.date.getDay()
   return eventDayOfWeek === currentDayOfWeek
 })
 </script>
@@ -30,7 +30,10 @@ const eventsOnDate = props.events.filter((event) => {
     <div
       v-for="event in eventsOnDate"
       :key="event.id"
-      class="flex shadow-md px-4 py-2 items-center justify-between bg-[#16A34A] text-white rounded-2xl h-[80px]"
+      :class="[
+        'flex shadow-md px-4 py-2 items-center justify-between bg-[#16A34A] text-white rounded-2xl h-[80px]',
+        {}
+      ]"
     >
       <div class="flex flex-col items-center">
         <span class="text-sm">{{ event.startTime }}</span>

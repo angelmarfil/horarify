@@ -1,4 +1,4 @@
 export interface IEventData {
   id: number
-  title: string
+  title: string | null
 }

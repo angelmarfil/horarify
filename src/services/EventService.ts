@@ -31,6 +31,34 @@ export default class EventService {
         return this.events.value
       } else {
         console.error(response)
+        toast.error(jsonResponse.title, { timeout: 5000 })
+      }
+    } catch (error) {
+      console.error(error)
+      toast.error(
+        '¡Ups! Parece que hubo un problema al conectar con el servidor. Por favor, inténtelo de nuevo más tarde.'
+      )
+      return []
+    }
+  }
+
+  async createEvent(newData: any) {
+    try {
+      const response = await fetch(`${endpoint}/Event/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`.replace(/['"]+/g, '')
+        },
+        body: JSON.stringify(newData)
+      })
+      const jsonResponse = await response.json()
+
+      if (response.ok) {
+        toast.success(jsonResponse.title, { timeout: 1500 })
+        return jsonResponse
+      } else {
+        console.error(response)
         toast.error(jsonResponse.title, { timeout: 10000 })
       }
     } catch (error) {

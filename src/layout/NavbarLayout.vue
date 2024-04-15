@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import ThemeController from '@/themes/ThemeController.vue'
+
+import { useEventStore } from '@/stores/event'
+
+const eventStore = useEventStore()
 </script>
 <template>
   <div class="navbar bg-base-100">
@@ -10,7 +14,7 @@ import ThemeController from '@/themes/ThemeController.vue'
       <a class="btn btn-ghost text-xl">Horarify</a>
     </div>
     <div class="navbar-end">
-      <button class="btn btn-ghost btn-circle">
+      <button class="btn btn-ghost btn-circle" @click="eventStore.manageDataModal = true">
         <svg
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"

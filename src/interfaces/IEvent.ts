@@ -5,6 +5,7 @@ export interface IEvent {
   startTime: string
   endTime: string
   dayOfWeek: number
+  color: string
   subject: IEventData
   classType: IEventData
   building: IEventData

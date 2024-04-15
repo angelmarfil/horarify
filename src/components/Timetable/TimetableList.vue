@@ -38,8 +38,36 @@ for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
 }
 </script>
 <template>
+  <div v-if="loading" class="flex flex-col gap-y-4 h-[80vh] p-4 bg-base-100">
+    <div class="flex justify-between">
+      <span class="skeleton h-7 w-24"></span>
+      <span class="skeleton h-7 w-24"></span>
+    </div>
+
+    <div class="skeleton px-4 py-2 rounded-2xl h-[80px]"></div>
+    <div class="skeleton px-4 py-2 rounded-2xl h-[80px]"></div>
+    <div class="skeleton px-4 py-2 rounded-2xl h-[80px]"></div>
+  </div>
+
+  <div v-else-if="events && events.length === 0" role="alert" class="alert my-[20vh]">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      class="stroke-current shrink-0 w-6 h-6"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+      ></path>
+    </svg>
+    <span>No hay eventos registrados</span>
+  </div>
+
   <swiper
-    v-if="loading"
+    v-else
     class="w-full h-full"
     :slides-per-view="1"
     :space-between="50"
@@ -63,15 +91,5 @@ for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
       <TimetableItem :date="date" :events="events"></TimetableItem>
     </swiper-slide>
   </swiper>
-  <div v-else class="flex flex-col gap-y-4 h-[80vh] p-4 bg-base-100">
-    <div class="flex justify-between">
-      <span class="skeleton h-7 w-24"></span>
-      <span class="skeleton h-7 w-24"></span>
-    </div>
-
-    <div class="skeleton px-4 py-2 rounded-2xl h-[80px]"></div>
-    <div class="skeleton px-4 py-2 rounded-2xl h-[80px]"></div>
-    <div class="skeleton px-4 py-2 rounded-2xl h-[80px]"></div>
-  </div>
 </template>
 <style scoped></style>

@@ -4,8 +4,8 @@ import EventService from '@/services/EventService'
 import type { IEvent } from '@/interfaces/IEvent'
 
 export const useEventStore = defineStore('event', () => {
-  const service = ref()
-  const loading = ref(false)
+  const service = ref(new EventService())
+  const loading = ref(true)
   const manageDataModal = ref(false)
   const chooseDataModal = ref(false)
 
@@ -14,16 +14,25 @@ export const useEventStore = defineStore('event', () => {
 
   //actions
   async function getEvents() {
+    loading.value = true
     try {
-      service.value = new EventService()
-      events.value = await service.value.fetchEvents()
-      return true
+      events.value = (await service.value.fetchEvents()) || []
     } catch (error) {
-      console.error(error)
+      console.error('Error fetching events:', error)
     } finally {
-      loading.value = true
+      loading.value = false
     }
   }
 
-  return { events, loading, manageDataModal, chooseDataModal, getEvents }
+  async function createEvent(newData: any) {
+    try {
+      service.value = new EventService()
+      const createdEvent = await service.value.createEvent(newData)
+      events.value.push(createdEvent)
+    } catch (error) {
+      console.error('Error creating entity:', error)
+    }
+  }
+
+  return { events, loading, manageDataModal, chooseDataModal, getEvents, createEvent }
 })
