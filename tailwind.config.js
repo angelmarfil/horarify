@@ -5,7 +5,10 @@ export default {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    fontFamily: {
+      sans: 'Poppins'
+    },
+    extend: {}
   },
   // eslint-disable-next-line no-undef
   plugins: [require("daisyui")],
