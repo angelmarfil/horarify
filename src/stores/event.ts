@@ -27,8 +27,8 @@ export const useEventStore = defineStore('event', () => {
   async function createEvent(newData: any) {
     try {
       service.value = new EventService()
-      const createdEvent = await service.value.createEvent(newData)
-      events.value.push(createdEvent)
+      await service.value.createEvent(newData)
+      getEvents()
     } catch (error) {
       console.error('Error creating entity:', error)
     }

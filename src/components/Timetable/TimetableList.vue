@@ -88,7 +88,7 @@ for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
     :modules="[EffectCreative, Pagination]"
   >
     <swiper-slide v-for="date in dates" :key="date.toString()">
-      <TimetableItem :date="date" :events="events"></TimetableItem>
+      <TimetableItem :date="date"></TimetableItem>
     </swiper-slide>
   </swiper>
 </template>

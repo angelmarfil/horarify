@@ -69,6 +69,7 @@ const eventModel: any = ref({
 
 const submitEvent = () => {
   eventStore.createEvent(eventModel.value)
+  eventStore.manageDataModal = false
 }
 </script>
 <template>

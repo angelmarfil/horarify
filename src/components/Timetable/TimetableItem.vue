@@ -1,7 +1,14 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { IEvent } from '@/interfaces/IEvent'
+import { useEventStore } from '@/stores/event'
+import { storeToRefs } from 'pinia'
 
-const props = defineProps<{ date: Date; events: IEvent[] }>()
+const store = useEventStore()
+
+const props = defineProps<{ date: Date }>()
+
+const { events } = storeToRefs(store)
 
 const getDayOfWeek = (date: Date) => {
   const options: any = { weekday: 'long' }
@@ -14,10 +21,12 @@ const formatDate = (date: Date) => {
   return date.toLocaleDateString('es-ES', options)
 }
 
-const eventsOnDate = props.events.filter((event) => {
-  const eventDayOfWeek = event.dayOfWeek
-  const currentDayOfWeek = props.date.getDay()
-  return eventDayOfWeek === currentDayOfWeek
+const eventsOnDate = computed(() => {
+  return events.value.filter((event) => {
+    const eventDayOfWeek = event.dayOfWeek
+    const currentDayOfWeek = props.date.getDay()
+    return eventDayOfWeek === currentDayOfWeek
+  })
 })
 </script>
 <template>
