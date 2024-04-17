@@ -31,5 +31,14 @@ export const useTaskStore = defineStore('task', () => {
     }
   }
 
-  return { tasks, loading, taskModal, getTasks, createTask }
+  async function isCompleted(id: number, completed: boolean) {
+    try {
+      await service.value.isCompleted(id, completed)
+      getTasks()
+    } catch (error) {
+      console.error('Error updating task:', error)
+    }
+  }
+
+  return { tasks, loading, taskModal, getTasks, createTask, isCompleted }
 })

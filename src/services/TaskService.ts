@@ -68,4 +68,29 @@ export default class TaskService {
       )
     }
   }
+
+  async isCompleted(id: number, value: boolean) {
+    try {
+      const response = await fetch(`${endpoint}/Task/isCompleted?id=${id}&isCompleted=${value}`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${this.token}`.replace(/['"]+/g, '')
+        }
+      })
+      const jsonResponse = await response.json()
+
+      if (response.ok) {
+        toast.success(jsonResponse.title, { timeout: 1500 })
+        return jsonResponse
+      } else {
+        console.error(response)
+        toast.error(jsonResponse.title, { timeout: 10000 })
+      }
+    } catch (error) {
+      console.error(error)
+      toast.error(
+        '¡Ups! Parece que hubo un problema al conectar con el servidor. Por favor, inténtelo de nuevo más tarde.'
+      )
+    }
+  }
 }

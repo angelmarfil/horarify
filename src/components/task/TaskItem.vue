@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useTaskStore } from '@/stores/task'
 import { storeToRefs } from 'pinia'
 
@@ -26,6 +26,11 @@ const tasksOnDate = computed(() => {
     return taskDayOfWeek === currentDayOfWeek
   })
 })
+
+const submitCompletedTask = (id: number, event: Event) => {
+  const checkbox = event.target as HTMLInputElement
+  store.isCompleted(id, checkbox.checked)
+}
 </script>
 <template>
   <div class="flex flex-col gap-y-4 h-[80vh] p-4 bg-base-100">
@@ -47,7 +52,12 @@ const tasksOnDate = computed(() => {
         <h2 class="text-pretty text-sm font-semibold">{{ task.title }}</h2>
         <p class="text-xs">{{ task.description }}</p>
       </div>
-      <input type="checkbox" class="checkbox bg-base-300" />
+      <input
+        type="checkbox"
+        class="checkbox bg-base-300"
+        @change="submitCompletedTask(task.id, $event)"
+        :checked="task.isCompleted"
+      />
     </div>
   </div>
 </template>
