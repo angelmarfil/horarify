@@ -1,7 +1,18 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { THEMES } from '@/themes/themes'
 const themes = ref(THEMES)
+
+const currentTheme = ref(localStorage.getItem('selectedTheme') || THEMES[0])
+
+const updateTheme = (theme: string) => {
+  currentTheme.value = theme
+  localStorage.setItem('selectedTheme', theme)
+}
+
+onMounted(() => {
+  document.documentElement.setAttribute('data-theme', currentTheme.value)
+})
 </script>
 
 <template>
@@ -33,6 +44,7 @@ const themes = ref(THEMES)
           class="theme-controller btn btn-sm btn-block btn-ghost justify-start"
           :aria-label="theme.charAt(0).toUpperCase() + theme.slice(1)"
           :value="theme"
+          @change="updateTheme(theme)"
         />
       </li>
     </ul>
