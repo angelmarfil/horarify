@@ -13,9 +13,16 @@ import { storeToRefs } from 'pinia'
 const store = useTaskStore()
 const { tasks, loading } = storeToRefs(store)
 
+let swiperRef: any = null
+
+const setSwiperRef = (swiper: any) => {
+  swiperRef = swiper
+}
+
 onMounted(async () => {
   loading.value = true
   await store.getTasks()
+  swiperRef.slideTo(7 - 1, 0)
 })
 
 const currentDate = new Date()
@@ -85,8 +92,9 @@ for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
       }
     }"
     :modules="[EffectCreative, Pagination]"
+    @swiper="setSwiperRef"
   >
-    <swiper-slide v-for="date in dates" :key="date.toString()">
+    <swiper-slide v-for="(date, index) in dates" :key="index">
       <TaskItem :date="date"></TaskItem>
     </swiper-slide>
   </swiper>
