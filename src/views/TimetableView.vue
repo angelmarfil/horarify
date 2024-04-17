@@ -5,5 +5,5 @@ import AddEventModal from '@/components/events/AddEventModal.vue'
 
 <template>
   <TimetableList></TimetableList>
-  <AddEventModal title="Evento"></AddEventModal>
+  <AddEventModal></AddEventModal>
 </template>

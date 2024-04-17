@@ -6,10 +6,6 @@ import type { IEventData } from '@/interfaces/IEventData'
 
 import { MENU } from '@/components/events/menu'
 
-const props = defineProps<{
-  title: string
-}>()
-
 const eventStore = useEventStore()
 
 const modalsVisibility = ref(MENU.map(() => false))
@@ -82,7 +78,7 @@ const submitEvent = () => {
           <button type="button" class="btn btn-ghost" @click="eventStore.manageDataModal = false">
             Cancelar
           </button>
-          <h3 class="font-bold text-base">{{ props.title }}</h3>
+          <h3 class="font-bold text-base">Evento</h3>
           <button class="btn btn-ghost" type="submit">Añadir</button>
         </div>
 

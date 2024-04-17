@@ -1,9 +1,22 @@
 <script setup lang="ts">
 import ThemeController from '@/themes/ThemeController.vue'
-
 import { useEventStore } from '@/stores/event'
+import { useTaskStore } from '@/stores/task'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const eventStore = useEventStore()
+const taskStore = useTaskStore()
+
+const openModals = () => {
+  if (route.name === 'timetable') {
+    eventStore.manageDataModal = true
+  }
+
+  if (route.name === 'tasks') {
+    taskStore.taskModal = true
+  }
+}
 </script>
 <template>
   <div class="navbar bg-base-100">
@@ -14,7 +27,7 @@ const eventStore = useEventStore()
       <a class="btn btn-ghost text-xl">Horarify</a>
     </div>
     <div class="navbar-end">
-      <button class="btn btn-ghost btn-circle" @click="eventStore.manageDataModal = true">
+      <button class="btn btn-ghost btn-circle" @click="openModals">
         <svg
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
