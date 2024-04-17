@@ -13,9 +13,16 @@ import { storeToRefs } from 'pinia'
 
 const store = useEventStore()
 
+let swiperRef: any = null
+
+const setSwiperRef = (swiper: any) => {
+  swiperRef = swiper
+}
+
 onMounted(async () => {
   loading.value = true
   await store.getEvents()
+  swiperRef.slideTo(7 - 1, 0)
 })
 
 const { events, loading } = storeToRefs(store)
@@ -87,8 +94,9 @@ for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
       }
     }"
     :modules="[EffectCreative, Pagination]"
+    @swiper="setSwiperRef"
   >
-    <swiper-slide v-for="date in dates" :key="date.toString()">
+    <swiper-slide v-for="(date, index) in dates" :key="index">
       <TimetableItem :date="date"></TimetableItem>
     </swiper-slide>
   </swiper>
