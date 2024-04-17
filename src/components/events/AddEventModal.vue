@@ -4,17 +4,17 @@ import DataListModal from '@/components/events/DataListModal.vue'
 import { ref } from 'vue'
 import type { IEventData } from '@/interfaces/IEventData'
 
+import { MENU } from '@/components/events/menu'
+
 const props = defineProps<{
   title: string
 }>()
 
-const menu = ref(['Materia', 'Tipo de clase', 'Edificio', 'Salón', 'Profesor'])
-
 const eventStore = useEventStore()
 
-const modalsVisibility = ref(menu.value.map(() => false))
+const modalsVisibility = ref(MENU.map(() => false))
 
-const selectedData = ref<(IEventData | null)[]>(menu.value.map(() => null))
+const selectedData = ref<(IEventData | null)[]>(MENU.map(() => null))
 
 const openModal = (index: number) => {
   const visibilityArray = modalsVisibility.value
@@ -87,7 +87,7 @@ const submitEvent = () => {
         </div>
 
         <ul class="menu bg-base-200 w-full rounded-box">
-          <li v-for="(option, index) in menu" :key="option">
+          <li v-for="(option, index) in MENU" :key="option">
             <button type="button" @click="openModal(index)">
               <span v-if="selectedData[index] === null">{{ option }}</span>
               <span v-else>{{ selectedData[index]?.title }}</span>
@@ -123,15 +123,16 @@ const submitEvent = () => {
           </li>
           <li class="flex flex-row justify-between">
             <span class="pr-8">Fin</span>
-            <input
-              v-model.trim="eventModel.endTime"
-              type="time"
-              class="w-[30%] bg-base-200 rounded-box"
-            />
+            <input v-model.trim="eventModel.endTime" type="time" class="bg-base-200 rounded-box" />
           </li>
-          <li class="flex flex-row justify-between">
+          <li class="flex flex-row justify-between items-center">
             <span class="pr-8">Color</span>
-            <input v-model="eventModel.color" type="color" value="#16A34A" class="w-[30%]" />
+            <input
+              v-model="eventModel.color"
+              type="color"
+              value="#16A34A"
+              class="block h-[40px] w-[35%] p-1"
+            />
           </li>
           <li class="flex flex-row justify-between">
             <select v-model.number="eventModel.dayOfWeek" class="select w-full bg-base-200">
@@ -150,7 +151,7 @@ const submitEvent = () => {
     </div>
   </dialog>
 
-  <div v-for="(option, index) in menu" :key="option">
+  <div v-for="(option, index) in MENU" :key="option">
     <DataListModal
       :title="option"
       :isOpen="modalsVisibility[index]"

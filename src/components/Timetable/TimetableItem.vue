@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { IEvent } from '@/interfaces/IEvent'
 import { useEventStore } from '@/stores/event'
 import { storeToRefs } from 'pinia'
 

@@ -8,6 +8,7 @@ import { useClassroomStore } from '@/stores/classroom'
 import { onMounted } from 'vue'
 import AddEditModal from '@/components/events/AddEditModal.vue'
 import type { IEventData } from '@/interfaces/IEventData'
+import { MENU } from '@/components/events/menu'
 
 const props = defineProps<{
   title: string
@@ -42,8 +43,6 @@ const store = (() => {
 onMounted(async () => {
   await store.getData()
 })
-
-const menu = ref(['Materia', 'Tipo de clase', 'Edificio', 'Salón', 'Profesor'])
 
 const modalIndex: any = ref(null)
 const isEditing: Ref<boolean> = ref(false)
@@ -204,7 +203,7 @@ const updateList = async () => {
 
   <AddEditModal
     v-if="modalIndex !== null"
-    :title="menu[modalIndex]"
+    :title="MENU[modalIndex]"
     :isEditing="isEditing"
     :entityId="entityId"
     :entityData="store.data.find((entity) => entity?.id === entityId) || null"
