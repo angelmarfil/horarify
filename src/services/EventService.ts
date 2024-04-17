@@ -11,7 +11,7 @@ export default class EventService {
 
   constructor() {
     this.events = ref([])
-    this.token = localStorage.getItem('token')
+    this.token = `Bearer ${localStorage.getItem('token')}`.replace(/['"]+/g, '')
   }
 
   getEvents() {
@@ -21,10 +21,12 @@ export default class EventService {
   async fetchEvents() {
     try {
       const response = await fetch(`${endpoint}/Event/getAll`, {
-        headers: { Authorization: `Bearer ${this.token}`.replace(/['"]+/g, '') }
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`.replace(/['"]+/g, '')
+        }
       })
       const jsonResponse = await response.json()
-
       this.events.value = jsonResponse
 
       if (response.ok) {
@@ -32,12 +34,10 @@ export default class EventService {
       } else {
         console.error(response)
         toast.error(jsonResponse.title, { timeout: 5000 })
+        return []
       }
     } catch (error) {
       console.error(error)
-      toast.error(
-        '¡Ups! Parece que hubo un problema al conectar con el servidor. Por favor, inténtelo de nuevo más tarde.'
-      )
       return []
     }
   }

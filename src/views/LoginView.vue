@@ -100,7 +100,7 @@ async function submit() {
             >Crea una.</RouterLink
           >
         </p>
-        <p class="fixed bottom-10">Horarify © 2024</p>
+        <p>Horarify © 2024</p>
       </form>
     </div>
   </div>

@@ -16,7 +16,7 @@ export const useEventStore = defineStore('event', () => {
   async function getEvents() {
     loading.value = true
     try {
-      events.value = (await service.value.fetchEvents()) || []
+      events.value = await service.value.fetchEvents()
     } catch (error) {
       console.error('Error fetching events:', error)
     } finally {
