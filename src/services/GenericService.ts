@@ -24,7 +24,6 @@ export default class EntityService<T> {
       })
 
       if (response.status === 401) {
-        window.location.pathname = '/login'
         localStorage.removeItem('token')
       }
 
