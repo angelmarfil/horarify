@@ -47,7 +47,7 @@ const tasksOnDate = computed(() => {
         <h2 class="text-pretty text-sm font-semibold">{{ task.title }}</h2>
         <p class="text-xs">{{ task.description }}</p>
       </div>
-      <input type="checkbox" class="checkbox checkbox-primary" />
+      <input type="checkbox" class="checkbox bg-base-300" />
     </div>
   </div>
 </template>

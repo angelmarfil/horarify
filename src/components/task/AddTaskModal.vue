@@ -17,11 +17,16 @@ const reminderActive = ref(false)
 
 const taskStore = useTaskStore()
 const { taskModal } = storeToRefs(taskStore)
+
+const submitTask = () => {
+  taskStore.createTask(taskModel.value)
+  taskModal.value = false
+}
 </script>
 <template>
   <dialog :class="['modal modal-bottom sm:modal-middle', { 'modal-open': taskModal }]">
     <div class="modal-box h-screen p-2">
-      <form>
+      <form @submit.prevent="submitTask">
         <div class="flex justify-between items-center">
           <button type="button" class="btn btn-ghost" @click="taskModal = false">Cancelar</button>
           <h3 class="font-bold text-base">Tarea</h3>
