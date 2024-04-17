@@ -21,12 +21,19 @@ const formatDate = (date: Date) => {
 }
 
 const eventsOnDate = computed(() => {
-  return events.value.filter((event) => {
-    const eventDayOfWeek = event.dayOfWeek
-    const currentDayOfWeek = props.date.getDay()
-    return eventDayOfWeek === currentDayOfWeek
-  })
+  return events.value
+    .filter((event) => event.dayOfWeek === props.date.getDay())
+    .sort((a, b) => {
+      const startTimeA = getTimeInMinutes(a.startTime)
+      const startTimeB = getTimeInMinutes(b.startTime)
+      return startTimeA - startTimeB
+    })
 })
+
+function getTimeInMinutes(timeString: string) {
+  const [hours, minutes] = timeString.split(':').map(Number)
+  return hours * 60 + minutes
+}
 </script>
 <template>
   <div class="flex flex-col gap-y-4 h-[80vh] p-4 bg-base-100">
