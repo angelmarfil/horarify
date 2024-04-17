@@ -14,6 +14,7 @@ import { storeToRefs } from 'pinia'
 const store = useEventStore()
 
 onMounted(async () => {
+  loading.value = true
   await store.getEvents()
 })
 
