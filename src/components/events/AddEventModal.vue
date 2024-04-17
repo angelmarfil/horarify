@@ -58,6 +58,7 @@ const updateEventModel = (index: number, id: number | null) => {
 const eventModel: any = ref({
   startTime: '',
   endTime: '',
+  color: '',
   dayOfWeek: 0,
   subjectId: 0,
   classTypeId: null,
@@ -129,7 +130,7 @@ const submitEvent = () => {
           </li>
           <li class="flex flex-row justify-between">
             <span class="pr-8">Color</span>
-            <input type="color" value="#16A34A" class="w-[30%]" />
+            <input v-model="eventModel.color" type="color" value="#16A34A" class="w-[30%]" />
           </li>
           <li class="flex flex-row justify-between">
             <select v-model.number="eventModel.dayOfWeek" class="select w-full bg-base-200">
