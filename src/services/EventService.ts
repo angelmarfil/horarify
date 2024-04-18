@@ -7,11 +7,9 @@ const endpoint: string = import.meta.env.VITE_API_URL
 
 export default class EventService {
   private events: Ref<IEvent[]>
-  private token: string | null
 
   constructor() {
     this.events = ref([])
-    this.token = `Bearer ${localStorage.getItem('token')}`.replace(/['"]+/g, '')
   }
 
   getEvents() {
@@ -48,7 +46,7 @@ export default class EventService {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.token}`.replace(/['"]+/g, '')
+          Authorization: `Bearer ${localStorage.getItem('token')}`.replace(/['"]+/g, '')
         },
         body: JSON.stringify(newData)
       })

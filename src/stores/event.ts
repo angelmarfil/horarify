@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, type Ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
 import EventService from '@/services/EventService'
 import type { IEvent } from '@/interfaces/IEvent'
 
@@ -11,6 +11,14 @@ export const useEventStore = defineStore('event', () => {
 
   //state
   const events: Ref<IEvent[]> = ref([])
+
+  const currentEvents = computed(() => {
+    const now = new Date()
+    const currentDayOfWeek = now.getDay()
+    return events.value.filter((event) => {
+      return event.dayOfWeek === currentDayOfWeek
+    })
+  })
 
   //actions
   async function getEvents() {
@@ -34,5 +42,13 @@ export const useEventStore = defineStore('event', () => {
     }
   }
 
-  return { events, loading, manageDataModal, chooseDataModal, getEvents, createEvent }
+  return {
+    events,
+    loading,
+    manageDataModal,
+    chooseDataModal,
+    currentEvents,
+    getEvents,
+    createEvent
+  }
 })

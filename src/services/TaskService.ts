@@ -7,11 +7,9 @@ const endpoint: string = import.meta.env.VITE_API_URL
 
 export default class TaskService {
   private tasks: Ref<ITask[]>
-  private token: string
 
   constructor() {
     this.tasks = ref([])
-    this.token = this.token = `Bearer ${localStorage.getItem('token')}`.replace(/['"]+/g, '')
   }
 
   getTasks() {
@@ -48,7 +46,7 @@ export default class TaskService {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.token}`.replace(/['"]+/g, '')
+          Authorization: `Bearer ${localStorage.getItem('token')}`.replace(/['"]+/g, '')
         },
         body: JSON.stringify(newData)
       })
@@ -74,7 +72,7 @@ export default class TaskService {
       const response = await fetch(`${endpoint}/Task/isCompleted?id=${id}&isCompleted=${value}`, {
         method: 'PATCH',
         headers: {
-          Authorization: `Bearer ${this.token}`.replace(/['"]+/g, '')
+          Authorization: `Bearer ${localStorage.getItem('token')}`.replace(/['"]+/g, '')
         }
       })
       const jsonResponse = await response.json()

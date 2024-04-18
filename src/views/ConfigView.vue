@@ -15,7 +15,7 @@ function logout() {
 </script>
 <template>
   <div class="m-4">
-    <ul class="menu bg-base-200 rounded-box w-full">
+    <!-- <ul class="menu bg-base-200 rounded-box w-full">
       <li>
         <a>
           <svg
@@ -73,7 +73,7 @@ function logout() {
           Item 3
         </a>
       </li>
-    </ul>
+    </ul> -->
 
     <ul class="menu bg-base-200 rounded-box w-full mt-4">
       <li>
